@@ -165,11 +165,11 @@ if __name__== "__main__":
 
     global ebsilon
     global lbl
-    global delta
+
 
 
     ############ parameters for tweking #######################
-    delta=10
+
     thresh_bin=10
     range_thresh=0.05
     r_granularity=0.1
