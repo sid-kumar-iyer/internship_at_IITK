@@ -28,7 +28,8 @@ def calculate_points(i,bcm,idx):
      
      
 def alpha_partition(i):
-     vis1=np.full((1000,),1)
+     
+     vis1=np.full((len(i),),1)
      alpha_part=[]
      for ind,val in enumerate(i):
           if(vis1[ind]!=0):
@@ -165,6 +166,7 @@ if __name__== "__main__":
 
     global ebsilon
     global lbl
+    global vis_value
 
 
 
@@ -214,18 +216,22 @@ if __name__== "__main__":
         
         
         
-        vis=np.full((1000,),1)
+##        vis=np.full((1000,),1)
 
         while lines is None:
             lines = cv.HoughLinesP(img,r_granularity,theta_granularity,threshold,minLineLength,maxLineGap)
             lpc+=1
             if(lpc>15):
                 break
+             
         
 
         
     ##data formation    
         if(lpc<15):
+              
+            vis_value=len(lines)    
+            vis=np.full((vis_value,),1) 
             print("no of lines generated in houghline: %d"%len(lines))
             img1=np.zeros((551,828,3), np.uint8)
             for line in lines:
