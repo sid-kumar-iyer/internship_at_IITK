@@ -48,7 +48,7 @@ def bnd(data,inc_r,thresh_wt,img,sample,dis_value):
         inc_r=f
         alpha=rn.uniform(0,1)
         p=alpha*p0 + (1-alpha)*p1
-        pv1=p_value(p,img)
+        pv1=p_value(p,img,0)
 
         while True: 
             pc=p+(r_cap*inc_r)
@@ -58,7 +58,7 @@ def bnd(data,inc_r,thresh_wt,img,sample,dis_value):
                 check1.append((p[0],p[1],r_cap[0],r_cap[1]))
                 check2.append((pc[0],pc[1],r_cap[0],r_cap[1]))
                 break 
-            pv2=p_value(pc,img)
+            pv2=p_value(pc,img,1)
             if(pv2==0):
                 dis1=0
                 break
@@ -82,7 +82,7 @@ def bnd(data,inc_r,thresh_wt,img,sample,dis_value):
                 check2.append((pc[0],pc[1],-r_cap[0],-r_cap[1]))
                 break
             
-            pv2=p_value(pc,img)
+            pv2=p_value(pc,img,2)
             if(pv2==0):
                 dis=np.linalg.norm(p-pc)
                 avg.append(dis1+dis)
@@ -125,8 +125,12 @@ def bnd(data,inc_r,thresh_wt,img,sample,dis_value):
 
 
 
-def p_value(p,img):
- 
+def p_value(p,img,x):
+    
+##    print("value of x %s"%x)
+    if (np.any(np.array(p) < 0) or np.any(np.array(p) >= img.shape)):
+         raise IndexError('%s: [LB: 0 UB): %s',(p, img.shape))
+        
     y,x=p[0],p[1]
     
     p0=np.floor(p)
